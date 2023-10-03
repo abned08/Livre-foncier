@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="LivreFoncier.View.dbView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LivreFoncier.View"
+             xmlns:vm="clr-namespace:LivreFoncier.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="323.684" d:DesignWidth="555.789">
+    <UserControl.DataContext>
+        <vm:DbViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="0,0,0,145.5">
+        <Button Content="حفظ نسخة" Command="{Binding OpenFolderCommand}" HorizontalAlignment="Left" Margin="310,65,0,0" VerticalAlignment="Top" Width="191"/>
+        <Button Content="استرجاع " Command="{Binding OpenCommand}" HorizontalAlignment="Left" Margin="81,65,0,0" VerticalAlignment="Top" Width="212"/>
+        <TextBlock HorizontalAlignment="Left" TextAlignment="Right" FontSize="20" Foreground="Red" Margin="81,122,0,0" TextWrapping="Wrap" Text="{Binding Message}" VerticalAlignment="Top" Width="420" Height="30"/>
+
+
+    </Grid>
+</UserControl>

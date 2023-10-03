@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="LivreFoncier.View.EntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LivreFoncier.View"
+             xmlns:cv="clr-namespace:LivreFoncier.Converter"
+             xmlns:vm="clr-namespace:LivreFoncier.ViewModel"
+             mc:Ignorable="d" MinHeight="323.685" MinWidth="563.684"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="15"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}">
+
+
+    
+    <UserControl.DataContext>
+        <vm:EntryViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <cv:HasErrorConverter x:Key="HasError"/>
+        <BooleanToVisibilityConverter x:Key="btvc"/>
+
+        
+
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+
+    </UserControl.Resources>
+
+    <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}" IsOpen="{Binding IsDialogOpen}" >
+        
+        <materialDesign:DialogHost.DialogContent>
+            
+            <Grid x:Name="EntryGrid" RenderTransformOrigin="0.5,0.5">
+
+                
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+                <syncfusion:SfTextInputLayout Margin="10,7,10,1" Grid.Row="1" Grid.Column="1" BorderBrush="Green" VerticalAlignment="Center"
+                    Hint="ولايـــة ؟"
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                    ErrorText="{Binding (Validation.Errors)/ErrorContent, ElementName=txtWilaya}">
+                    <TextBox  x:Name="txtWilaya"  MaxLength="50" Text="{Binding CurrentEntry.Wilaya,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                              >
+                        
+                    </TextBox>
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="10,7,10,1" BorderBrush="Green" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                    Hint="المحافظــة العقاريــة ؟"
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                    ErrorText="{Binding (Validation.Errors)/ErrorContent, ElementName=txtTown}">
+                    <TextBox  x:Name="txtTown"  MaxLength="50" Text="{Binding CurrentEntry.Conservation,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                              >
+                    </TextBox>
+                </syncfusion:SfTextInputLayout>
+                <Button Margin="185,4,178.5,146.5"
+            Command="{Binding SaveState}"
+            Width="150"
+            Height="Auto"
+            HorizontalAlignment="Center"
+            BorderThickness="0"
+            Background="#0d5fa3"
+            Foreground="White" 
+            Content="حفــــظ"
+            FontSize="16" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" />
+
+                <Button Background="OrangeRed" Grid.Row="2" Grid.Column="1" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{ StaticResource MaterialDesignFloatingActionButton}" Margin="4" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+
+                    <materialDesign:PackIcon
+                                    Kind="Close"
+                                    Height="15"
+                                    Width="15" />
+                </Button>
+
+
+            </Grid>
+            
+        </materialDesign:DialogHost.DialogContent>
+        <StackPanel x:Name="stack" Orientation="Vertical">
+
+            <StackPanel.Background>
+                <SolidColorBrush x:Name="rectangleBrush" Color="White" />
+            </StackPanel.Background>
+
+            <StackPanel.Triggers>
+                <EventTrigger RoutedEvent="StackPanel.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="rectangleBrush" Storyboard.TargetProperty="Color" From="Green" To="HotPink" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </StackPanel.Triggers>
+
+
+            <StackPanel x:Name="livreStack" Width="600" Height="679"   >
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="../Icon.jpg" Stretch="Fill" Opacity="0.8" />
+                </StackPanel.Background>
+                <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="مـــرحباً" FontWeight="Bold" FontSize="48" Foreground="BlueViolet" VerticalAlignment="Top" Height="57" Margin="0,2,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="15 190">
+                <TextBlock HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap"  Text="{Binding LastEntry.Wilaya,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="auto"  FontWeight="Bold" FontSize="38" Foreground="Red" VerticalAlignment="Bottom" Height="57" MinWidth="150" Margin="12 0"/>
+                <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text=":مديرية الحفظ العقاري لولاية " FontWeight="Bold" FontSize="38" Foreground="DarkBlue" VerticalAlignment="Center" Height="57"  Margin="0,12,0,0"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="15 -30">
+                    <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="{Binding LastEntry.Conservation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="auto"  FontWeight="Bold" FontSize="38" Foreground="DarkMagenta" VerticalAlignment="Bottom" Height="57" MinWidth="150" Margin="12 0"/>
+                    <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text=":المحافظة العقـــارية " FontWeight="Bold" FontSize="38" Foreground="DarkBlue" VerticalAlignment="Center" Height="57" Margin="0,12,0,0"/>
+
+            </StackPanel>
+            </StackPanel>
+            
+
+            
+        </StackPanel>
+    </materialDesign:DialogHost>
+
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ShowDialogCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+</UserControl>
+    

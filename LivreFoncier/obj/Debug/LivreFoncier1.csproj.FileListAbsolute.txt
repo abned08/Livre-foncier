@@ -1,0 +1,9 @@
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\LivreFoncier1.csprojResolveAssemblyReference.cache
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\App.baml
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\ViewModel\MainWindow.g.cs
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\View\test.g.cs
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\App.g.cs
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\LivreFoncier_Content.g.cs
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\LivreFoncier_MarkupCompile.cache
+C:\Users\Aboubaker\Desktop\LivreFoncier\LivreFoncier\obj\Debug\LivreFoncier_MarkupCompile.lref

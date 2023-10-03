@@ -1,0 +1,25 @@
+﻿<dx:ThemedWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:ViewModel="clr-namespace:LivreFoncier.ViewModel"
+    x:Class="LivreFoncier.MainWindow"
+    Title="MainWindow" Height="944.361" Width="1634.586" WindowStyle="ThreeDBorderWindow" ResizeMode="CanMinimize" WindowState="Maximized" WindowStartupLocation="CenterScreen" ShowStatusPanel="False">
+    <Window.DataContext>
+        <ViewModel:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="HamburgerMenuItemTemplate" DataType="{x:Type ViewModel:MainViewModel}">
+            <dxwui:HamburgerMenuNavigationButton Content="{Binding Caption}" NavigationTargetTypeName="{Binding PageName}" />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="815*"/>
+        </Grid.ColumnDefinitions>
+        <dxwui:HamburgerMenu IsMenuVisible="{Binding IsMenuVisible}" ItemsSource="{Binding Items}" AllowBuiltInNavigation="True"
+                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ItemTemplate="{StaticResource HamburgerMenuItemTemplate}" IsInitiallyCompact="{Binding IsInitiallyCompact,Mode=TwoWay}" SyncWithActivePage="True" ShowMenuOnEmptySpaceBarClick="True" ViewState="CompactInline" AvailableViewStates="Overlay" >
+        </dxwui:HamburgerMenu>
+    </Grid>
+</dx:ThemedWindow>

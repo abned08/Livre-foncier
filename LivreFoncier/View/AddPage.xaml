@@ -1,0 +1,206 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LivreFoncier.View" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm="clr-namespace:LivreFoncier.ViewModel"
+             xmlns:cv="clr-namespace:LivreFoncier.Converter"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="LivreFoncier.View.AddPage"
+             mc:Ignorable="d"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="15"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             
+             FontFamily="{DynamicResource MaterialDesignFont}" Height="auto" Width="630">
+
+    <UserControl.DataContext>
+        <vm:LivreViewModel/>
+
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <cv:HasErrorConverter x:Key="HasError"/>
+        <cv:ConvertToInt x:Key="converter"/>
+
+        <Style TargetType="Label">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+
+        <!--<Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>-->
+
+    </UserControl.Resources>
+
+    <Grid x:Name="mainGrid" >
+        <Grid Margin="15" KeyboardNavigation.TabNavigation="Cycle">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.ColumnSpan="4"
+                Margin="0,0,0,20"
+                FontSize="25"
+                FontWeight="Bold"
+                Foreground="#0d5fa3"
+                Text="إضافــــة"
+                TextAlignment="Center" />
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    
+                    Grid.Row="0"
+                    Hint="رقم سجل التسليم" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=recordNum}">
+
+                    <TextBox x:Name="recordNum" TabIndex="0" MaxLength="4" Text="{Binding CurrentLivre.RecordNum, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource converter}}"    />
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    
+                    Grid.Row="1"
+                    Hint="رقم الترتيبة" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=arrangeNum}">
+
+                    <TextBox x:Name="arrangeNum" TabIndex="1" MaxLength="5" Text="{Binding CurrentLivre.ArrangeNum, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource converter}}"    />
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0" Height="83" Grid.Row="2"
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}">
+                    <DatePicker TabIndex="2"
+                    x:Name="deliveryDate"
+                    SelectedDate="{Binding CurrentLivre.DeliveryDate, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:HintAssist.Hint="تاريخ التسليم"  VerticalAlignment="Bottom" Height="45" Margin="12,-7,10,7" 
+                     >
+
+                    </DatePicker>
+
+
+                </syncfusion:SfTextInputLayout>
+
+
+
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    
+                    Grid.Row="3" Grid.RowSpan="2"
+                    Hint="المالك"  
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=deliveredTo}" RenderTransformOrigin="0.496,0.588" Height="135">
+
+                    <TextBox x:Name="deliveredTo" TabIndex="3" AcceptsReturn="True" TextAlignment="Right" Height="85" MaxLength="50" HorizontalContentAlignment="Center" Text="{Binding CurrentLivre.DeliveredTo, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"    TextWrapping="Wrap" Margin="10,0,8,9" />
+                </syncfusion:SfTextInputLayout>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,10,0">
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    Hint="البلدية"
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                    ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=txtTown}" Height="72">
+                    <syncfusion:SfTextBoxExt  x:Name="txtTown" TabIndex="4" TextChanged="txtTown_TextChanged" MaxLength="50" Text="{Binding CurrentLivre.Town, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                             AutoCompleteMode="Suggest"
+                              SearchItemPath="Town"
+                              >
+                        <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                            <DataTemplate>
+                                <StackPanel  Orientation="Horizontal">
+
+                                    <TextBlock Foreground="White" Text="{Binding Town}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                    </syncfusion:SfTextBoxExt>
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    
+                    Grid.Row="1"
+                    CharMaxLength="3"
+                    Hint="القسم" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                                              
+                    ErrorText="{Binding (Validation.Errors)/ErrorContent, ElementName=txtSection}" Height="76">
+
+                    <TextBox x:Name="txtSection" TabIndex="5" MaxLength="3" Text="{Binding CurrentLivre.Section, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource converter}}"  />
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    
+                    Grid.Row="2"
+                    Hint="مجموعة الملكية" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=txtIlot}">
+
+
+                    <TextBox x:Name="txtIlot" TabIndex="6" MaxLength="3" Text="{Binding CurrentLivre.Ilot, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource converter}}"    TextWrapping="Wrap" />
+                </syncfusion:SfTextInputLayout>
+
+                <syncfusion:SfTextInputLayout Margin="0,14,0,0"
+                    
+                    Grid.Row="3"
+                    Hint="الجزء" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=txtLot}">
+
+
+                    <TextBox x:Name="txtLot" MaxLength="3" TabIndex="7" Text="{Binding CurrentLivre.Lot, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource converter}}"    />
+                </syncfusion:SfTextInputLayout>
+
+
+
+
+                <CheckBox  x:Name="txtDoubling" TabIndex="8" Grid.Row="3" Height="30" IsChecked ="{Binding CurrentLivre.Doubling}">
+                    ازدواج التسليم
+                </CheckBox>
+                <CheckBox  x:Name="txtRepeate" TabIndex="9" Grid.Row="3" Height="30" IsChecked ="{Binding CurrentLivre.RepeateOrCopy}">
+                    نسخــة
+                </CheckBox>
+
+
+                <syncfusion:SfTextInputLayout Margin="0,7,0,0"
+                    Hint="ملاحظــة" 
+                    HasError="{Binding RelativeSource={RelativeSource Mode=Self}, Path=InputView.(Validation.Errors), Converter={StaticResource HasError}}"
+                ErrorText="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=note}">
+
+                    <TextBox x:Name="note" MaxLength="50" TabIndex="10" Text="{Binding CurrentLivre.Note, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"    />
+                </syncfusion:SfTextInputLayout>
+            </StackPanel>
+
+            
+
+            <StackPanel
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Center"
+                Orientation="Vertical">
+                <Button Margin="0,10,0,0" TabIndex="11"
+                    Command="{Binding SaveCommand}"
+                    Width="150"
+                    Height="45"
+                    HorizontalAlignment="Center"
+                    BorderThickness="0"
+                    Background="#0d5fa3"
+                    Foreground="White" 
+                    Content="حفــــظ"
+                    FontSize="16" />
+                <TextBlock x:Name="Message" Width="543" Height="78" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red"  HorizontalAlignment="Center" Text="{Binding Message}"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>
